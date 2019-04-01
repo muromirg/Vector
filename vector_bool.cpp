@@ -6,13 +6,13 @@ const int _BYTESIZE = 8;
 const int _BLOCKSIZE = 64;
 
 
-vbool::vbool(uint64_t& v_block, int ind):
+vbool::vbool(uint64_t& v_block, int ind) noexcept:
     target(v_block),
     index(ind % _BLOCKSIZE)
 { }
 
 
-vbool::operator bool() const
+vbool::operator bool() const noexcept
 {
     uint64_t tmp = 1;
     tmp <<= (_BLOCKSIZE - index - 1);
@@ -28,7 +28,7 @@ void vbool::set_index(size_t ind) noexcept
 }
 
 
-vbool& vbool::operator = (bool val)
+vbool& vbool::operator = (bool val) noexcept
 {
     uint64_t tmp = 1;
     if (val){
@@ -41,6 +41,13 @@ vbool& vbool::operator = (bool val)
         target &= tmp;
     }
     return *this;
+}
+
+
+vbool& vbool::operator = (vbool val) noexcept
+{
+    operator = (bool(val));
+    set_index(val.index);
 }
 
 
@@ -160,7 +167,7 @@ void Vector<bool>::insert(bool item, size_t index)
 
     push_back(0);
     for (int i = _size - 1; i > index; i--)
-        at(i) = bool(at(i - 1));
+        at(i) = at(i - 1);
 
     at(index) = item;
 }

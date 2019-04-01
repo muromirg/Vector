@@ -53,12 +53,12 @@ template<typename DataT> bool operator != (const Vector<DataT>& a, const Vector<
 
 class vbool{
 public:
-    operator bool() const;
-    vbool& operator = (bool val);
+    operator bool() const             noexcept;
+    vbool& operator = (bool val)      noexcept;
+    vbool& operator = (vbool val)     noexcept;
     vbool() = delete;
-    //vbool(vbool& item) = delete;
-    vbool(uint64_t& v_block, int ind);
-    void set_index(size_t ind) noexcept;
+    vbool(uint64_t& v_block, int ind) noexcept;
+    void set_index(size_t ind)        noexcept;
 
 private:
     uint64_t& target;
