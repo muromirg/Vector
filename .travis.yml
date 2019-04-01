@@ -20,7 +20,6 @@ addons:
 script: 
   - mkdir build
   - mkdir log
-  - make
   - make test
   - ./build/test.out --help-tests
   - ./build/test.out 
