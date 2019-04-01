@@ -1,0 +1,14 @@
+*.log
+test.cpp
+log/
+*.gch
+*.out
+console_test.cpp
+runner.cpp
+*.info
+*.gcno
+covinfo
+*.gcda
+.vscode/
+build/
+

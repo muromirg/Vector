@@ -1,0 +1,32 @@
+language: cpp
+
+os: linux
+
+compiler: g++-7
+
+cache:
+  apt: true
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-7
+    - g++-7-multilib
+    - cxxtest
+    - lcov
+
+script: 
+  - mkdir build
+  - mkdir log
+  - make
+  - make test
+  - ./build/test.out --help-tests
+  - ./build/test.out 
+  - export CODECOV_TOKEN="3e66d8c7-72d1-471b-9991-9ec823cca08b"
+  - lcov --no-external --capture --directory . --output-file cov.info
+  - bash <(curl -s https://codecov.io/bash) -f cov.info
+
+sudo: false
+dist: trusty
