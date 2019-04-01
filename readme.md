@@ -6,7 +6,7 @@
 
 Made out of educational purposes
 
-Here is my variation of std::vector. Vector interface is pretty similar to std::vector one. Also RAII and move semantics C++ features are supported.
+Here is my variation of std::vector. Vector interface is pretty similar to std::vector one. Also RAII and C++ move semantics are supported.
 
 To use you need to locate source files to some folder and include "myvector.hpp" to your project.
 
