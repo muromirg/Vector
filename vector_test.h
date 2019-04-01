@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-class VectorTest : public CxxTest::TestSuite{
+class VectorTest : public CxxTest::TestSuite {
 public:
 	void testConstructors()
 	{
@@ -57,6 +57,15 @@ public:
 		} catch (std::exception& e){
 			TS_FAIL(e.what());
 		}
+		try{
+			Vector<int> x;
+			x.pop_back();
+		} catch (MyException& e){
+			TS_TRACE(std::string(e.what()) + ' ' +
+					 std::string(e.get_info().file) + ' ' + 
+					 std::string(e.get_info().function));
+	
+		}
 	}
 
 	void testInsert()
@@ -74,6 +83,14 @@ public:
 		} catch (MyException& e){
 			TS_FAIL(e.what());
 		}
+		try{
+			Vector<int> x;
+			x.insert(10, 1000);
+		} catch (MyException& e){
+			TS_TRACE(std::string(e.what()) + ' ' +
+					 std::string(e.get_info().file) + ' ' + 
+					 std::string(e.get_info().function));
+		}
 	}
 
 	void testOperators()
@@ -84,6 +101,8 @@ public:
 
 			x[0] = 100;
 			TSM_ASSERT_DIFFERS("Operator '=' works incorrectly!", x[0], y[0]);
+
+			
 
 			x[0] = 1;
 			TSM_ASSERT("Operator '==' works incorrectly!", x == y);
@@ -129,28 +148,91 @@ public:
 		x = superbool;
 		TS_ASSERT(!x);
 	}
-	void testVectorBool()
-	{
-		Vector<bool> vb(1);
-		vb[0] = 1;
-		vb[1] = 0;
-		vb[20] = 1;
-		TS_ASSERT(vb[20]);
-		TSM_ASSERT(std::to_string(vb[0]) + std::to_string(vb[1]), vb[0] && (!vb[1]));
-		Vector<bool> vbb;
-		vbb.push_back(1);
-		vbb.push_back(0);
-		vbb.push_back(1);
-		TS_ASSERT(vbb[0] && !vbb[1] && vbb[2]);
 
-		Vector<bool> v3;
-		
-		for (int i = 0; i < 65; i++)
-			v3.push_back(1);
-		
-		TS_ASSERT(v3[64] && v3[63]);
+	void testConstructorsBool()
+	{
+		try{
+			Vector<bool> a(10);
+
+			a[7] = 1;
+
+			Vector<bool> b = a;
+
+			TS_ASSERT_EQUALS(b.at(0), a.at(0));
+			b[0] = 100;
+			TS_ASSERT_DIFFERS(b.at(0), a.at(0));
+
+			Vector<Vector<bool>> mtx;
+			
+			for (int i = 0; i < 2; i++)
+				mtx.push_back({1, 0, 1, 0, 1});
+
+			bool int_mtx[] = {1, 0, 1, 0, 1};
+
+			for (int i = 0; i < mtx.size(); i++)
+				for(int j = 0; j < mtx[0].size(); j++)
+					TS_ASSERT_EQUALS(mtx[i][j], int_mtx[j]);
+			
+		} catch (std::exception& e){
+			TS_FAIL(e.what());
+		}
 	}
 
-private:
+	void testPushPopShrinkBool()
+	{
+		try{
+			Vector<bool> x;
 
+			x.push_back(1);
+
+			TS_ASSERT_EQUALS(x.size(), 1);
+			TS_ASSERT_EQUALS(x.mem_size(), 1);
+
+			x.push_back(0);
+			x.push_back(0);
+			x.push_back(1);
+
+			TS_ASSERT_EQUALS(x.size(), 4);
+			TS_ASSERT_EQUALS(x.mem_size(), 1);
+
+			x.pop_back();
+			x.shrink();
+
+			TS_ASSERT_EQUALS(x.size(), 3);
+			TS_ASSERT_EQUALS(x.mem_size(), 1);
+		} catch (std::exception& e){
+			TS_FAIL(e.what());
+		}
+		try{
+			Vector<bool> x;
+			x.pop_back();
+		} catch (MyException& e){
+			TS_TRACE(std::string(e.what()) + ' ' +
+					 std::string(e.get_info().file) + ' ' + 
+					 std::string(e.get_info().function));
+	
+		}
+	}
+
+	void testInsertBool()
+	{
+		try{
+			Vector<int> x = {1, 0, 1}, y = {1, 0, 0, 1};
+
+			x.insert(0, 1);
+
+			TS_ASSERT_EQUALS(x, y);
+
+		} catch (MyException& e){
+			TS_FAIL(e.what());
+		}
+		try{
+			Vector<int> x;
+			x.insert(1, 1000);
+		} catch (MyException& e){
+			TS_TRACE(std::string(e.what()) + ' ' +
+					 std::string(e.get_info().file) + ' ' + 
+					 std::string(e.get_info().function));
+		}
+	}
 };

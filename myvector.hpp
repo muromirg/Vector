@@ -56,7 +56,9 @@ public:
     operator bool() const;
     vbool& operator = (bool val);
     vbool() = delete;
+    //vbool(vbool& item) = delete;
     vbool(uint64_t& v_block, int ind);
+    void set_index(size_t ind);
 
 private:
     uint64_t& target;
@@ -71,12 +73,13 @@ public:
     Vector(int memsize);
     Vector(const Vector<bool>&  item);
     Vector(      Vector<bool>&& item);
+    Vector(const std::initializer_list<bool>& arglist);
 
     size_t size() const;
     size_t mem_size() const;
     void   push_back(bool item);
     void   pop_back();
-    void   insert(const bool& item, const size_t index);
+    void   insert(bool item, size_t index);
     bool   is_empty() const;
     void   resize(size_t newsize);
     void   shrink();
