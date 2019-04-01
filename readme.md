@@ -5,3 +5,9 @@
 
 
 Made out of educational purposes
+
+Here is my variation of std::vector. Vector interface is pretty similar to std::vector one. Also RAII and move semantics C++ features are supported.
+
+To use you need to locate source files to some folder and include "myvector.hpp" to your project.
+
+You may run "make test" to build test program, which run tests located in "vector_test.h"
