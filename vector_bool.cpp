@@ -215,7 +215,7 @@ void Vector<bool>::shrink()
 {
     uint64_t *__tmp = new (__FILE__, __LINE__) uint64_t[_size / (sizeof(uint64_t)*8) + 1];
 
-    for (int i = 0; i < _size; i++)
+    for (int i = 0; i < _size / _BLOCKSIZE + 1; i++)
         __tmp[i] = _data[i];
 
     DELETE(_data);
