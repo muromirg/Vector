@@ -23,7 +23,7 @@ script:
   - make test
   - ./build/test.out --help-tests
   - ./build/test.out 
-  - export CODECOV_TOKEN="d0a350aa-26ff-4385-b738-5c25e2a35a20"
+  - export CODECOV_TOKEN="c4ffb9a1-7224-4bb0-aaeb-65115bb4fbc7"
   - lcov --no-external --capture --directory . --output-file cov.info
   - bash <(curl -s https://codecov.io/bash) -f cov.info
 
