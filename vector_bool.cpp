@@ -1,4 +1,6 @@
-//#include "myvector.hpp"
+/*
+    Vector<bool> (compact bit dynamic array) class members implementation
+*/ 
 
 const int _BYTESIZE = 8;
 const int _BLOCKSIZE = 64;
@@ -20,7 +22,7 @@ vbool::operator bool() const
 }
 
 
-void vbool::set_index(size_t ind)
+void vbool::set_index(size_t ind) noexcept
 {
     index = ind % _BLOCKSIZE;
 }
@@ -62,6 +64,15 @@ Vector<bool>::Vector(const Vector<bool>& item):
 }
 
 
+Vector<bool>::Vector(Vector<bool>&& item) noexcept:
+    _data(item._data),
+    _memsize(item._memsize),
+    _size(item._size)
+{
+    item._data = nullptr;
+}
+
+
 Vector<bool>::Vector(int memsize):
     _data(nullptr),
     _memsize(memsize),
@@ -82,7 +93,7 @@ Vector<bool>::Vector(const std::initializer_list<bool>& arglist):
 }
 
 
-Vector<bool>::~Vector()
+Vector<bool>::~Vector() noexcept
 {
     DELETE(_data);
 }
@@ -175,19 +186,19 @@ const vbool Vector<bool>::at(size_t index) const
 }
 
 
-bool Vector<bool>::is_empty() const
+bool Vector<bool>::is_empty() const noexcept
 {
     return _size == 0;
 }
 
 //measured in bits
-size_t Vector<bool>::size() const
+size_t Vector<bool>::size() const noexcept
 {
     return _size;
 }
 
 //measured in 64-bit blocks
-size_t Vector<bool>::mem_size() const 
+size_t Vector<bool>::mem_size() const noexcept
 {
     return _memsize;
 }
@@ -207,7 +218,7 @@ void Vector<bool>::shrink()
 }
 
 
-Vector<bool>& Vector<bool>::operator = (Vector<bool> item)
+Vector<bool>& Vector<bool>::operator = (Vector<bool> item) noexcept
 {
     std::swap(this->_data, item._data);
     std::swap(this->_memsize, item._memsize);
@@ -216,7 +227,8 @@ Vector<bool>& Vector<bool>::operator = (Vector<bool> item)
     return *this;
 }
 
-Vector<bool>& Vector<bool>::operator = (Vector<bool>&& item){
+Vector<bool>& Vector<bool>::operator = (Vector<bool>&& item) noexcept
+{
     std::swap(this->_data, item._data);
     std::swap(this->_memsize, item._memsize);
     std::swap(this->_size, item._size);

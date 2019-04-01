@@ -47,7 +47,7 @@ template<typename DataT> Vector<DataT>::Vector(const Vector<DataT>& item):
 }
 
 
-template<typename DataT> Vector<DataT>::Vector(Vector<DataT>&& item):
+template<typename DataT> Vector<DataT>::Vector(Vector<DataT>&& item) noexcept:
     _data(item._data),
     _memsize(item._memsize),
     _size(item._size)
@@ -81,20 +81,20 @@ template<typename DataT> Vector<DataT>::Vector(const std::initializer_list<DataT
 }
 
 
-template<typename DataT> Vector<DataT>::~Vector()
+template<typename DataT> Vector<DataT>::~Vector() noexcept
 {
     DELETE(_data);
 }
 
 
 //Methods implementation
-template<typename DataT> size_t Vector<DataT>::size() const
+template<typename DataT> size_t Vector<DataT>::size() const noexcept
 {
     return _size;
 }
 
 
-template<typename DataT> size_t Vector<DataT>::mem_size() const
+template<typename DataT> size_t Vector<DataT>::mem_size() const noexcept
 {
     return _memsize;
 }
@@ -160,7 +160,7 @@ template<typename DataT> void Vector<DataT>::pop_back()
 }
 
 
-template<typename DataT> bool Vector<DataT>::is_empty() const
+template<typename DataT> bool Vector<DataT>::is_empty() const noexcept
 {
     return _size == 0;
 }
@@ -281,7 +281,7 @@ template<typename DataT> DataT& Vector<DataT>::operator [] (const size_t index)
 }
 
 
-template<typename DataT> Vector<DataT>& Vector<DataT>::operator = (Vector<DataT> item)
+template<typename DataT> Vector<DataT>& Vector<DataT>::operator = (Vector<DataT> item) noexcept
 {
     std::swap(this->_data, item._data);
     std::swap(this->_memsize, item._memsize);
@@ -290,7 +290,7 @@ template<typename DataT> Vector<DataT>& Vector<DataT>::operator = (Vector<DataT>
     return *this;
 }
 
-template<typename DataT> Vector<DataT>& Vector<DataT>::operator = (Vector<DataT>&& item)
+template<typename DataT> Vector<DataT>& Vector<DataT>::operator = (Vector<DataT>&& item) noexcept
 {
     std::swap(this->_data, item._data);
     std::swap(this->_memsize, item._memsize);
