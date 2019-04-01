@@ -147,18 +147,25 @@ void Vector<bool>::insert(bool item, size_t index)
     if (index >= _size)
         throw MyException("Index is out of range");
 
-    if (_size >= _memsize*_BLOCKSIZE)
-        reserve(_memsize + 1);
-        
-    for (int i = _size; i > index; i--)
-        _data[i] = bool(_data[i - 1]);
+    push_back(0);
+    for (int i = _size - 1; i > index; i--)
+        at(i) = bool(at(i - 1));
 
-    _data[index] = item;
-    _size++;
+    at(index) = item;
 }
 
 
 vbool Vector<bool>::at(size_t index)
+{
+    if (index >= _size)
+        throw MyException("Index is out of range.");
+    
+    return {_data[index / (_BLOCKSIZE)],
+            (int) index % ((int)_BLOCKSIZE)};
+}
+
+
+const vbool Vector<bool>::at(size_t index) const
 {
     if (index >= _size)
         throw MyException("Index is out of range.");
@@ -221,4 +228,24 @@ Vector<bool>& Vector<bool>::operator = (Vector<bool>&& item){
 vbool Vector<bool>::operator [] (size_t index)
 {
     return at(index);
+}
+
+
+const vbool Vector<bool>::operator [] (size_t index) const
+{
+    return at(index);
+}
+
+
+bool operator == (const Vector<bool>& a, const Vector<bool>& b)
+{
+    if (a.size() == b.size())
+    {
+        for(int i = 0; i < a.size(); i++)
+            if (a.at(i) != b.at(i))
+                return false;
+    }
+    else return false;
+
+    return true;
 }

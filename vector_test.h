@@ -210,24 +210,23 @@ public:
 			TS_TRACE(std::string(e.what()) + ' ' +
 					 std::string(e.get_info().file) + ' ' + 
 					 std::string(e.get_info().function));
-	
 		}
 	}
 
 	void testInsertBool()
 	{
 		try{
-			Vector<int> x = {1, 0, 1}, y = {1, 0, 0, 1};
+			Vector<bool> x = {1, 0, 1}, y = {1, 0, 0, 1};
 
 			x.insert(0, 1);
 
-			TS_ASSERT_EQUALS(x, y);
+			TS_ASSERT(x == y);
 
 		} catch (MyException& e){
 			TS_FAIL(e.what());
 		}
 		try{
-			Vector<int> x;
+			Vector<bool> x;
 			x.insert(1, 1000);
 		} catch (MyException& e){
 			TS_TRACE(std::string(e.what()) + ' ' +

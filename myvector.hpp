@@ -85,11 +85,15 @@ public:
     void   shrink();
     void   reserve(size_t new_memsize);
 
-    vbool  at(size_t index);
+    vbool       at(size_t index);
+    const vbool at(size_t index) const;
+
 
     vbool         operator [] (size_t index);
+    const vbool   operator [] (size_t index) const;
     Vector<bool>& operator =  (Vector<bool> item);
     Vector<bool>& operator =  (Vector<bool>&& item);
+    
 
 private:
     uint64_t *_data;
