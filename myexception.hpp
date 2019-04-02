@@ -15,7 +15,6 @@ public:
         _file(),
         _func(),
         _line(line)
-
     {
         strcpy(_file, file);
         strcpy(_func, function);

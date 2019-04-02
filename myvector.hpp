@@ -92,12 +92,10 @@ public:
     vbool       at(size_t index);
     const vbool at(size_t index) const;
 
-
     vbool         operator [] (size_t index);
     const vbool   operator [] (size_t index) const;
-    Vector<bool>& operator =  (Vector<bool> item) noexcept;
+    Vector<bool>& operator =  (Vector<bool> item)   noexcept;
     Vector<bool>& operator =  (Vector<bool>&& item) noexcept;
-    
 
 private:
     uint64_t *_data;
